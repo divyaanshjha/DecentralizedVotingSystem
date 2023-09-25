@@ -47,7 +47,7 @@ contract VotingToken is ERC20("VoteToken", "VTO"), Ownable {
         return candidates[_name].voteCount;
     }
 
-    function declareWinner() public returns (Candidate memory){
+    function declareWinner() public returns (string memory){
         for (uint256 i = 0; i<listOfCandidates.length; i++) 
         {
             if(candidates[listOfCandidates[i]].voteCount > maxVotes){
