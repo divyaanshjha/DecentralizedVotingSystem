@@ -58,7 +58,7 @@ contract VotingToken is ERC20("VoteToken", "VTO"), Ownable {
                 continue;
             }
         }
-        return winner;
+        return winner.name;
     }
     function showCandidates () public view returns (string[] memory){
         return listOfCandidates;
