@@ -16,6 +16,8 @@ contract VotingToken is ERC20("VoteToken", "VTO"), Ownable {
 
     struct Voter {
         bool voteStatus;
+        uint256 timestamp;
+        uint256 blockHeight;
     }
 
     Candidate public winner;
@@ -36,6 +38,10 @@ contract VotingToken is ERC20("VoteToken", "VTO"), Ownable {
         candidates[_name].voteCount++;
 
         voters[msg.sender].voteStatus = true;
+
+
+        voters[msg.sender].timestamp = block.timestamp;
+        voters[msg.sender].blockHeight = block.number;
     }
 
     function addCandidate(string memory _name, address _candidateAddress) public onlyOwner {
@@ -62,5 +68,10 @@ contract VotingToken is ERC20("VoteToken", "VTO"), Ownable {
     }
     function showCandidates () public view returns (string[] memory){
         return listOfCandidates;
+    }
+
+    function voteAudit(address _voterAddress) public view returns (bool voteStatus, uint256 timestamp , uint256 blockHeight) {
+        Voter memory voter = voters[_voterAddress];
+        return(voter.voteStatus, voter.timestamp , voter.blockHeight);
     }
 }
